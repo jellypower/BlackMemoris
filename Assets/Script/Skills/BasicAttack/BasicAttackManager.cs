@@ -69,8 +69,8 @@ public class BasicAttackManager : Skill
     // Update is called once per frame
     void Update()
     {
-        if (player.CastTargetObj != null)
-            transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTargetObj.transform.position);
+        if (player.CastTarget != null)
+            transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTarget.transform.position);
 
         UpdateCooldown();
         UpdateFreezeTime();
@@ -85,11 +85,11 @@ public class BasicAttackManager : Skill
     void castProjectilebyAnim()
     {
 
-        Bullets[nextPoolIndex].SetProjectileProperty(player.CastTargetObj, player.CastTarget, ProjectileSpeed,
+        Bullets[nextPoolIndex].SetProjectileProperty(player.CastTarget.gameObject, player.CastTarget, ProjectileSpeed,
             player.Stat.spellPoint * dmgCoeff + dmgConst);
         BulletObjs[nextPoolIndex].SetActive(true);
         nextPoolIndex = (nextPoolIndex + 1) % objPoolMaxIndex;
-        transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTargetObj.transform.position);
+        transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTarget.gameObject.transform.position);
 
 
     }
@@ -105,9 +105,9 @@ public class BasicAttackManager : Skill
         if (coolDownTimer > 0)
             return SkillState.CoolDown;
 
-        if (player.CastTargetObj == null) return SkillState.TargetNotFound; // if문 조건 바꿔주자
+        if (player.CastTarget == null) return SkillState.TargetNotFound; // if문 조건 바꿔주자
 
-        if (Vector2.Distance(player.transform.position, player.CastTargetObj.transform.position) > Range)
+        if (Vector2.Distance(player.transform.position, player.CastTarget.transform.position) > Range)
             return SkillState.FarToCast;
 
 

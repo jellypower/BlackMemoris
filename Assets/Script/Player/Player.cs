@@ -17,23 +17,8 @@ public class Player : Character
 {
     OrderState order;
 
+    public Character CastTarget { get; private set; }
 
-    GameObject castTargetObj;
-    public GameObject CastTargetObj
-    {
-        get
-        {
-            return castTargetObj;
-        }
-    }
-    Character castTarget;
-    public Character CastTarget
-    {
-        get
-        {
-            return castTarget;
-        }
-    }
 
     [HideInInspector] public Vector2 CastTargetPos;
 
@@ -74,7 +59,7 @@ public class Player : Character
 
 
     OrderState prevOrder;
-    GameObject prevCastTargetObj;
+    Character prevCastTargetObj;
     Vector2 prevCastTarPos;
     GameObject prevSkillToCastObj;
 
@@ -257,7 +242,7 @@ public class Player : Character
             case PlayerActionState.SkillCasting:
                 if (prevSkillToCastObj == SkillToCastObj &&
                     order == OrderState.CastToTarget &&
-                    prevCastTargetObj == CastTargetObj)
+                    prevCastTargetObj == CastTarget)
                     return true;
                 else if (prevSkillToCastObj == SkillToCastObj &&
                     order == OrderState.CastToGround &&
@@ -268,7 +253,7 @@ public class Player : Character
             case PlayerActionState.MovingToTargetToCast:
                 if (order == OrderState.CastToTarget &&
                     prevSkillToCastObj == SkillToCastObj &&
-                    prevCastTargetObj == CastTargetObj)
+                    prevCastTargetObj == CastTarget)
                     return true;
                 break;
             case PlayerActionState.MovingToTarPosToCast:
@@ -302,7 +287,7 @@ public class Player : Character
                 break;
             case PlayerActionState.SkillCasting:
                 if (skillToCast.CastType == SkillCastType.Targeting)
-                    FaceDirection = (Vector2)(CastTargetObj.transform.position - transform.position);
+                    FaceDirection = (Vector2)(CastTarget.transform.position - transform.position);
                 else if (skillToCast.CastType == SkillCastType.NonTargeting)
                     FaceDirection = CastTargetPos - (Vector2)transform.position;
                 break;
@@ -352,9 +337,8 @@ public class Player : Character
     }
     public void setTarget(GameObject obj)
     {
-        prevCastTargetObj = castTargetObj;
-        castTargetObj = obj;
-        castTarget = obj.GetComponent<Character>();
+        prevCastTargetObj = CastTarget;
+        CastTarget = obj.GetComponent<Character>();
     }
 
     public OrderState Order
@@ -452,22 +436,22 @@ public class Player : Character
     {
 
         if (path.Count != 0 && !Physics2D.Raycast(
-                path.Last.Value, CastTargetObj.transform.position,
-                ((Vector2)CastTargetObj.transform.position - path.Last.Value).magnitude,
+                path.Last.Value, CastTarget.transform.position,
+                ((Vector2)CastTarget.transform.position - path.Last.Value).magnitude,
                  obstaclesLayerMask))
         {
-            path.Last.Value = CastTargetObj.transform.position;
+            path.Last.Value = CastTarget.transform.position;
         }
         else
         {
-            path = pathFinder.getShortestPath(transform.position, CastTargetObj.transform.position);
+            path = pathFinder.getShortestPath(transform.position, CastTarget.transform.position);
         }
     }
 
     void clearAction(PlayerActionState nextState)
     {
-        castTargetObj = null;
-        castTarget = null;
+
+        CastTarget = null;
         CastTargetPos = transform.position;
         path.Clear();
         skillToCast = null;
