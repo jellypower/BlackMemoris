@@ -40,7 +40,10 @@ public class BasicAttackManager : Skill
     }
 
 
-
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -70,7 +73,7 @@ public class BasicAttackManager : Skill
     void Update()
     {
         if (player.CastTarget != null)
-            transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTarget.transform.position);
+            transform.rotation = TransformUtils.getAngleTo(transform.position, player.CastTarget.transform.position);
 
         UpdateCooldown();
         UpdateFreezeTime();
@@ -89,7 +92,7 @@ public class BasicAttackManager : Skill
             player.Stat.spellPoint * dmgCoeff + dmgConst);
         BulletObjs[nextPoolIndex].SetActive(true);
         nextPoolIndex = (nextPoolIndex + 1) % objPoolMaxIndex;
-        transform.rotation = SkillUtils.getAngleTo(transform.position, player.CastTarget.gameObject.transform.position);
+        transform.rotation = TransformUtils.getAngleTo(transform.position, player.CastTarget.gameObject.transform.position);
 
 
     }

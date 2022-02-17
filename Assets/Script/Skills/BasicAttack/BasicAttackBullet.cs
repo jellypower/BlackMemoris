@@ -37,7 +37,7 @@ public class BasicAttackBullet : Projectile
 			if (targetObj != null) {
 				targetTransform = targetObj.transform;
 
-				transform.rotation = SkillUtils.getAngleTo(transform.position, targetTransform.position);
+				transform.rotation = TransformUtils.getAngleTo(transform.position, targetTransform.position);
 			}
 		}
 
@@ -69,7 +69,7 @@ public class BasicAttackBullet : Projectile
 		{
 			transform.position = Vector2.MoveTowards(transform.position, targetTransform.position, speed * Time.deltaTime);
 
-			transform.rotation = SkillUtils.RotateTo(transform.rotation,
+			transform.rotation = TransformUtils.RotateTo(transform.rotation,
 			transform.position, targetTransform.position, Time.deltaTime * rotateSpeed);
 		}
 

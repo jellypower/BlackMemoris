@@ -4,35 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum SkillFuncType
-{
-    Attack,
-    Transport,
-    Buff
-}
-
-public enum SkillCastType
-{
-    Targeting,
-    NonTargeting,
-    Toggle,
-    Passive
-}
-
-public enum SkillState
-{
-    Castable,
-    FarToCast,
-    TargetNotFound,
-    CoolDown,
-    Casting
-}
-
-
 public abstract class Skill : MonoBehaviour
 {
-    protected Player player;
-    public Player Player { get { return player; } }
+    protected PlayerMotor player;
+    public PlayerMotor Player { get { return player; } }
 
     protected PlayerStat playerStat;
 
@@ -82,29 +57,37 @@ public abstract class Skill : MonoBehaviour
             return basicRangeConst + rangeCoeff * player.Stat.range;
         }
     }
-    
-    protected virtual void Start()
+
+    protected virtual void Awake()
     {
-        initSkill();
-        initAnimator();
+        GetDependentComponents();
+
+        awakeAnimator();
+
         CharacterMask = LayerMask.GetMask("Character");
+
     }
 
-    protected virtual void initSkill()
+    protected virtual void Start()
     {
-        player = GetComponentInParent<Player>();
         playerStat = player.Stat;
 
     }
 
-    void initAnimator()
+    protected virtual void GetDependentComponents()
     {
-        Anim = GetComponent<Animator>();
+        player = GetComponentInParent<PlayerMotor>();
+        if (player == null) throw new Exception("PlayerMotor not found");
 
+        Anim = GetComponent<Animator>();
+        if (Anim == null) throw new Exception("Animator not found");
+
+    }
+
+    void awakeAnimator()
+    {
         animCastTriggerId = Animator.StringToHash("cast");
         interruptTriggerId = Animator.StringToHash("interrupt");
-
-
     }
 
     public virtual void InterruptCasting()

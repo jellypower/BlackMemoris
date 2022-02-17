@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class PlayerInputManager : MonoBehaviour
 
 
     CursorState cursorState;
-    Player player;
+    PlayerMotor player;
 
     Skill[] playerSkills;
 
@@ -32,9 +33,11 @@ public class PlayerInputManager : MonoBehaviour
     {
 
         cursorState = CursorState.Normal;
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerMotor>();
 
-        playerSkills = player.skills;
+        if(player == null) throw new Exception("No player found, Input Manager have to be attached to Player");
+
+        playerSkills = player.equippedSkills;
     }
 
     // Update is called once per frame
@@ -60,16 +63,14 @@ public class PlayerInputManager : MonoBehaviour
                 {
                     if (readySkill.getState() != SkillState.CoolDown)
                     {
-                        player.setSkillToCast(readySkill);
-                        player.setTarget(objUnderCursor);
-                        player.Order = OrderState.CastToTarget;
+                        player.OrderToCastToTarget(readySkill, objUnderCursor);
+
                     }
                 }
                 else if(readySkill.CastType == SkillCastType.NonTargeting)
                 {
-                    player.setSkillToCast(readySkill);
-                    player.setTarPos(cursorPosOnWorld);
-                    player.Order = OrderState.CastToGround;
+                    player.OrderToCastToTarPos(readySkill, cursorPosOnWorld);
+
                 }
             }
             clearCastState();
@@ -77,8 +78,8 @@ public class PlayerInputManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1)) // 우클릭
         {
-            player.setTarPos(cursorPosOnWorld);
-            player.Order = OrderState.MoveToTargetPos;
+            player.OrderToMove(cursorPosOnWorld);
+
 
             clearCastState();
             //나중에 클릭하면 indicator도 setActive(false)해줘야됨.
@@ -92,7 +93,7 @@ public class PlayerInputManager : MonoBehaviour
 
         if (Input.GetKeyDown(Key_Stop))
         {
-            player.Order = OrderState.Stop;
+            player.OrderToStop();
         }
         else
         {
@@ -100,6 +101,8 @@ public class PlayerInputManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(Key_for_Skills[i]))
                 {
+                    
+
 
                     readySkill=playerSkills[i];
 
@@ -111,8 +114,8 @@ public class PlayerInputManager : MonoBehaviour
                     }
                     else if (readySkill.CastType == SkillCastType.Toggle)
                     {
-                        player.setSkillToCast(readySkill);
-                        player.Order = OrderState.StartCastSkill;
+
+                        player.OrderToCastImmediately(readySkill);
                         break;
                     }
                         
@@ -139,8 +142,4 @@ public class PlayerInputManager : MonoBehaviour
         else objUnderCursor = null;
     }
 
-    void UpdateSKillToCast()
-    {
-
-    }
 }
