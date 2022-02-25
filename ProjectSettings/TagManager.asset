@@ -13,6 +13,7 @@ TagManager:
   - SkillProjectile
   - Skill
   - HitBox
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -49,6 +50,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Character
+    uniqueID: 2989356963
     locked: 0
   - name: Projectile
     uniqueID: 691170967

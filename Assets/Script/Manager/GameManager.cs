@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -15,9 +13,10 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
 
+        DontDestroyOnLoad(instance);
+
     }
 
-    public GameManageConst GameManageConst;
 
     
 }

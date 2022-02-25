@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    protected float speed = 0;
-    protected float damage = 0;
+    protected Skill spawner;
+
+
+    protected float speed;
+    protected float damage;
     [SerializeField] protected float rotateSpeed;
 
-    public abstract void SetSpawner(GameObject spawner);
+    public abstract void SetSpawner(Skill spawner);
+
 
 
 

@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - GameManageConst: {fileID: 11400000, guid: 68b3396c2c442514a97c03e209678cc8, type: 2}
-  executionOrder: 0
+  executionOrder: 5
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

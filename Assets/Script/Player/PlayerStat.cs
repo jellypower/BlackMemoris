@@ -3,37 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "PlayerStat", menuName = "ScriptableObject/PlayerStat", order = 0)]
 public class PlayerStat : CharacterBasicStat
 {
+    public FloatStat MaxMP;
+    public IntStat Agility;
+    public IntStat Level;
+    public IntStat Exp;
+    public IntStat SkillPoint;
+    public IntStat Money;
 
-    public override void  OnEnable()
+    public float CurrentMP { get; protected set; }
+
+
+    protected override void Awake()
     {
-        base.OnEnable();
-        /*_*/currentMP = maxMP;
+        base.Awake();
+        CurrentMP = MaxMP.Value;
     }
 
-
-    public float maxMP;
-    public float currentMP;
-    /*public float currentMP
+    public bool ConsumeMP(float mp)
     {
-        get
-        {
-            return _currentMP;
-        }
-        set
-        {
-            _currentMP = maxMP < value ? maxMP : value;
-        }
-    }*/
+        if (CurrentMP < mp)
+            return false;
 
-    public int agility;
-
-
-    public int level;
-    public int exp;
-    public int skillPoint;
-    public int credit;
+        CurrentMP -= mp;
+        return true;
+    }
 
 }

@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 3
+  defaultImpact: 2
+  impactMagnitute: 1
 --- !u!95 &3030703496793157338
 Animator:
   serializedVersion: 3
@@ -103,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 691170967
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -3741572083276207005, guid: 30edb9d12883df642bcb8b4f9bb0c3da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

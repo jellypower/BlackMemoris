@@ -6,17 +6,21 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    protected PlayerMotor player;
-    public PlayerMotor Player { get { return player; } }
+
+
+    protected PlayerController player;
+    public PlayerController Player { get { return player; } }
 
     protected PlayerStat playerStat;
 
-
+    [Header("Skill Stats")]
     [SerializeField] protected float defaultCoolDown;
-    public float DefaultCoolDown { get { return defaultCoolDown; } }
-
     protected float coolDownTimer;
-    public float CoolDownTimer { get { return coolDownTimer; } }
+
+
+    public SkillState State { get; protected set;}
+  
+
 
 
     [SerializeField] protected SkillFuncType skillType;
@@ -42,28 +46,25 @@ public abstract class Skill : MonoBehaviour
     
     protected bool isCasting = false; // 스킬이 캐스팅 되고있으면 true인 실시간 updqte 변수
 
-    protected Animator Anim;
-    protected int animCastTriggerId;
-    protected int interruptTriggerId;
+
 
 
 
     [SerializeField]protected float rangeCoeff;
     [SerializeField]protected float basicRangeConst;
 
+    
+
     protected LayerMask CharacterMask;
     public virtual float Range { get
         {
-            return basicRangeConst + rangeCoeff * player.Stat.range;
+            return basicRangeConst + rangeCoeff * player.Stat.Range.Value;
         }
     }
-
+    
     protected virtual void Awake()
     {
         GetDependentComponents();
-
-        awakeAnimator();
-
         CharacterMask = LayerMask.GetMask("Character");
 
     }
@@ -76,35 +77,18 @@ public abstract class Skill : MonoBehaviour
 
     protected virtual void GetDependentComponents()
     {
-        player = GetComponentInParent<PlayerMotor>();
+        player = GetComponentInParent<PlayerController>();
         if (player == null) throw new Exception("PlayerMotor not found");
 
-        Anim = GetComponent<Animator>();
-        if (Anim == null) throw new Exception("Animator not found");
 
     }
 
-    void awakeAnimator()
-    {
-        animCastTriggerId = Animator.StringToHash("cast");
-        interruptTriggerId = Animator.StringToHash("interrupt");
-    }
 
-    public virtual void InterruptCasting()
-    {
-        Anim.ResetTrigger(animCastTriggerId);
-        Anim.SetTrigger(interruptTriggerId);
-        isCasting = false;
+    public abstract void CastSkill(); // 나중에 bool형으로 바꿔서 cast 가능한지 상태를 넘겨주게 하자.
+    public abstract void InterruptCasting();
 
-        
 
-    }
 
-    public virtual void finishSkill()
-    {
-
-        isCasting = false;
-    }
 
     protected void UpdateCooldown()
     {
@@ -122,22 +106,13 @@ public abstract class Skill : MonoBehaviour
         }
     }
 
-
-
     public bool isFreezingPlayer()
     {
         return castDelayTimer > 0.0f;
     }
 
-    public virtual void CastSkill()
-    {
-        Anim.ResetTrigger(interruptTriggerId);
-        Anim.SetTrigger(animCastTriggerId);
-        isCasting = true;
-        castDelayTimer = castDelay;
-    }
-
-    public abstract SkillState getState();
+    
+    protected abstract void updateState();
 
 }
 

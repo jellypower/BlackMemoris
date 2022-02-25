@@ -90,7 +90,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 584207559
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -118,17 +118,17 @@ MonoBehaviour:
   defaultCoolDown: 1
   skillType: 0
   castType: 0
-  playerAnimCastTime: 1
+  animCastTime: 0
   castDelay: 0.5
   rangeCoeff: 1
   basicRangeConst: 1
   ProjectilePrefab: {fileID: 3030703496793157348, guid: 0caf74cac6ac4cd49b9f2ce5093e9422, type: 3}
   IndicatorPrefab: {fileID: 0}
   UIPrefab: {fileID: 0}
-  objPoolMaxIndex: 5
   ProjectileSpeed: 3
   dmgConst: 10
   dmgCoeff: 1
   impactConst: 0
   impactCoeff: 0
+  objPoolMaxIndex: 5
   drawGizmo: 1

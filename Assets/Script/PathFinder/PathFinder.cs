@@ -17,7 +17,7 @@ public class PathFinder : MonoBehaviour
     LayerMask layerTocheckCollide;
 
 
-    BoxCollider2D collider;
+    new BoxCollider2D collider;
 
     int numCols;
     int numRows;

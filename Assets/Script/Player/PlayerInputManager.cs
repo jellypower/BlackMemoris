@@ -17,7 +17,9 @@ public class PlayerInputManager : MonoBehaviour
 
 
     CursorState cursorState;
-    PlayerMotor player;
+    PlayerController player;
+
+    PlayerSkillContainer skillContainer;
 
     Skill[] playerSkills;
 
@@ -29,16 +31,37 @@ public class PlayerInputManager : MonoBehaviour
 
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        getDependentComponents();
+
+    }
     void Start()
     {
 
-        cursorState = CursorState.Normal;
-        player = GetComponent<PlayerMotor>();
 
-        if(player == null) throw new Exception("No player found, Input Manager have to be attached to Player");
 
-        playerSkills = player.equippedSkills;
+        playerSkills = skillContainer.Skills;
     }
+
+    #region init functions
+
+    void getDependentComponents()
+    {
+        player = GetComponent<PlayerController>();
+        if (player == null) throw new Exception("No player found, Input Manager have to be attached to Player");
+
+        skillContainer = GetComponent<PlayerSkillContainer>();
+    }
+
+    void initInputManager()
+    {
+        cursorState = CursorState.Normal;
+
+    }
+
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -61,8 +84,9 @@ public class PlayerInputManager : MonoBehaviour
             {
                 if(readySkill.CastType == SkillCastType.Targeting && objUnderCursor != null)
                 {
-                    if (readySkill.getState() != SkillState.CoolDown)
+                    if (readySkill.State != SkillState.CoolDown)
                     {
+                        Debug.Log(readySkill);
                         player.OrderToCastToTarget(readySkill, objUnderCursor);
 
                     }
@@ -102,9 +126,12 @@ public class PlayerInputManager : MonoBehaviour
                 if (Input.GetKeyDown(Key_for_Skills[i]))
                 {
                     
-
-
                     readySkill=playerSkills[i];
+
+                    if(readySkill == null)
+                    {
+                        break;
+                    }
 
                     if (readySkill.CastType == SkillCastType.Targeting ||
                         readySkill.CastType == SkillCastType.NonTargeting)

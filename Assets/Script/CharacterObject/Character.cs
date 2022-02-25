@@ -6,6 +6,7 @@ public abstract class Character : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    [HideInInspector]
     public CharacterBasicStat CharacterStat;
 
     #region start functions
@@ -23,7 +24,9 @@ public abstract class Character : MonoBehaviour
     #region public functions
     public abstract void GetAttack(float damage, Character Attacker);
 
-    public abstract void GetImpact(float impact, Character Attacker);
+    public abstract void GetImpact(float impact, float time,Vector2 dir, Character Attacker);
+
+    public abstract void RecoverFromImpact();
 
     #endregion
 

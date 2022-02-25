@@ -5,11 +5,9 @@ using UnityEngine;
 public class BasicAttackBullet : Projectile
 {
 
-	GameObject SpawnerObj;
-	Skill spawner;
-	
+	[SerializeField] int defaultImpact;
+	[SerializeField] float impactMagnitute;
 
-	GameObject targetObj;
 	Character target;
 	Transform targetTransform;
 
@@ -28,20 +26,20 @@ public class BasicAttackBullet : Projectile
 
 	private void OnEnable()
 	{
-		
+		transform.parent = null;
 
-		if (SpawnerObj != null)
+		if (spawner != null)
 		{
-			transform.position = SpawnerObj.transform.position;
+			transform.position = spawner.transform.position;
 
-			if (targetObj != null) {
-				targetTransform = targetObj.transform;
+			if (target != null) {
+				targetTransform = target.transform;
 
 				transform.rotation = TransformUtils.getAngleTo(transform.position, targetTransform.position);
 			}
 		}
 
-		if (targetObj == null)
+		if (target == null)
 		{
 			gameObject.SetActive(false);
 			return;
@@ -58,11 +56,12 @@ public class BasicAttackBullet : Projectile
 	void Update()
 	{
 
-		if (Mathf.Approximately(Vector2.Distance(targetObj.transform.position, transform.position), 0) && !getToTarget)
+		if (Vector2.Distance(target.transform.position, transform.position) < .1f && !getToTarget)
 		{
 			anim.SetTrigger(explodeAnimId);
 			getToTarget = true;
 			AttackTarget(damage, target);
+			ImpactTarget(defaultImpact , target);
 		}
 
 		if (!getToTarget)
@@ -79,24 +78,24 @@ public class BasicAttackBullet : Projectile
 	
 	public void ObjectDisablebyAnim()
 	{
-		transform.position = SpawnerObj.transform.position;
+		transform.parent = spawner.transform;
+		transform.position = spawner.transform.position;
 		gameObject.SetActive(false);
 		
 	}
 
-	public void SetProjectileProperty(GameObject targetObj, Character target, float speed, float damage)
+	public void SetProjectileProperty(Character target, float speed, float damage)
 	{
-		this.targetObj = targetObj;
 		this.target = target;
 		this.speed = speed;
 		this.damage = damage;
 
 	}
 
-	public override void SetSpawner(GameObject SpawnerObj)
+	public override void SetSpawner(Skill Spawner)
 	{
-		this.SpawnerObj = SpawnerObj;
-		spawner = SpawnerObj.GetComponent<BasicAttackManager>();
+
+		spawner = Spawner;
 
 	}
 
@@ -105,6 +104,19 @@ public class BasicAttackBullet : Projectile
 
 		target.GetAttack(dmg, spawner.Player);
 		// target에서 hitbox를 치면 hitbox에는 character 클래스가 없어서 오류가 뜬다.
+    }
+
+	void ImpactTarget(int impact, Character target)
+    {
+
+		Vector2 force = 
+			(target.transform.position - transform.position)
+			.normalized
+			*GameConst.ForceAdjuster
+			* impactMagnitute;
+
+		
+		target.GetImpact(impact , 1.0f,force , target);
     }
 
 
