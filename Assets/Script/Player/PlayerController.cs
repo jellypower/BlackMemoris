@@ -205,25 +205,16 @@ public class PlayerController : Character
         switch (state)
         {
             case PlayerActionState.idle:
+            case PlayerActionState.Moving:
+            case PlayerActionState.MovingToTargetToCast:
+            case PlayerActionState.MovingToTarPosToCast:
                 TransitionByOrder();
                 break;
+
             case PlayerActionState.SkillCasting:
                 if (order != OrderState.None) interruptCasting();
                 TransitionByOrder();
-                break;
-            case PlayerActionState.Moving:
-                TransitionByOrder();
-                break;
-            case PlayerActionState.MovingToTargetToCast:
-                TransitionByOrder();
-                break;
-            case PlayerActionState.MovingToTarPosToCast:
-                TransitionByOrder(); //아직 미구현
-                break;
-            case PlayerActionState.Impacted:
-
-                break;
-                
+                break;                
         }
 
         setOrder(OrderState.None);

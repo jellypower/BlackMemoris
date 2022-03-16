@@ -15,7 +15,6 @@ public class PlayerInputManager : MonoBehaviour
     #endregion
 
 
-
     CursorState cursorState;
     PlayerController player;
 
@@ -69,6 +68,7 @@ public class PlayerInputManager : MonoBehaviour
 
         UpdateMouseInput();
         UpdateKeyInput();
+        
 
     }
 

@@ -27,7 +27,7 @@ public class PlayerSkillContainer : MonoBehaviour
     {
 
         Skills = new Skill[SkillMax];
-
+        
     }
 
     void tmpInit()
