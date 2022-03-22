@@ -22,7 +22,7 @@ TagManager:
   - Water
   - UI
   - ObjPhysics
-  - Character
+  - ObjHitbox
   - Projectile
   - SkillEffect
   - 

@@ -84,7 +84,7 @@ public class PlayerInputManager : MonoBehaviour
             {
                 if(readySkill.CastType == SkillCastType.Targeting && objUnderCursor != null)
                 {
-                    if (readySkill.State != SkillState.CoolDown)
+                    if (readySkill.GetState() != SkillState.CoolDown)
                     {
                         Debug.Log(readySkill);
                         player.OrderToCastToTarget(readySkill, objUnderCursor);

@@ -118,17 +118,18 @@ MonoBehaviour:
   defaultCoolDown: 1
   skillType: 0
   castType: 0
-  animCastTime: 0
-  castDelay: 0.5
+  totalCastTime: 1
+  castDelay: 0.8
   rangeCoeff: 1
   basicRangeConst: 1
+  playerCastAnimator: {fileID: 0}
   ProjectilePrefab: {fileID: 3030703496793157348, guid: 0caf74cac6ac4cd49b9f2ce5093e9422, type: 3}
   IndicatorPrefab: {fileID: 0}
   UIPrefab: {fileID: 0}
-  ProjectileSpeed: 3
+  ProjectileSpeed: 10
   dmgConst: 10
   dmgCoeff: 1
-  impactConst: 0
-  impactCoeff: 0
+  impactConst: 1
+  impactCoeff: 1
   objPoolMaxIndex: 5
-  drawGizmo: 1
+  drawGizmo: 0

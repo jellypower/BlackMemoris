@@ -5,11 +5,11 @@ using UnityEngine;
 public class ManaBombManager : Skill
 {
 
+
     [Space]
     [Header("ManaBomb/Skill Prefabs")]
     public GameObject ProjectilePrefab; // 나중에 부모 클래스로 옮기자.
-    public GameObject IndicatorPrefab; // 나중에 부모 클래스로 옮기자.
-    public GameObject UIPrefab; // 나중에 부모 클래스로 옮기자. -> 요놈은 UI스프라이트로만 바꿔도 될듯.
+
 
 
 
@@ -22,6 +22,9 @@ public class ManaBombManager : Skill
     [SerializeField] float impactCoeff;
     [SerializeField] float bulletSpawnTime;
     [SerializeField] float bulletChargeTime;
+    [SerializeField] protected float Range; // 기본 사거리
+
+
 
     [Header("ManaBomb/Skill Settings")]
     [SerializeField] int objPoolMaxIndex;
@@ -38,12 +41,13 @@ public class ManaBombManager : Skill
 
     Character castTarget;
 
+    public Transform SpawnPoint { get; private set; }
 
     float Damage
     {
         get
         {
-            return dmgConst + dmgCoeff * player.Stat.SpellPower.Value;
+            return dmgConst + dmgCoeff * player.Stat.Power.Value;
         }
     }
 
@@ -52,6 +56,9 @@ public class ManaBombManager : Skill
         base.Awake();
 
         initBulletPool();
+
+        SpawnPoint = transform.Find("BulletSpawnPoint").transform;
+
     }
 
     void initBulletPool()
@@ -89,9 +96,9 @@ public class ManaBombManager : Skill
         
 
         UpdateCooldown();
-        UpdateFreezeTime();
+        UpdateCastDelayTime();
 
-        updateState();
+
 
     }
 
@@ -105,6 +112,10 @@ public class ManaBombManager : Skill
 
         castProjectile();
 
+        yield return new WaitForSeconds(Mathf.Max(totalCastTime-bulletSpawnTime-bulletChargeTime,0));
+
+        FinishCasting();
+
     }
 
 
@@ -114,7 +125,7 @@ public class ManaBombManager : Skill
         castCoroutine = CastCoroutine();
         StartCoroutine(castCoroutine);
         isCasting = true;
-        coolDownTimer = defaultCoolDown;
+        coolDownTimer = coolDownTime;
         castDelayTimer = castDelay;
 
     }
@@ -134,6 +145,11 @@ public class ManaBombManager : Skill
 
     }
 
+    protected override void FinishCasting()
+    {
+        isCasting = false;
+    }
+
 
 
     // interrupt 가능하게 고치기
@@ -141,17 +157,17 @@ public class ManaBombManager : Skill
 
     void startChargeProjectile()
     {
-        bulletToCast.CastBullet(
+        bulletToCast.Spawn(
             castTarget,
             ProjectileSpeed,
-            player.Stat.SpellPower.Value * dmgCoeff + dmgConst);
+            player.Stat.Power.Value * dmgCoeff + dmgConst);
 
     }
 
     void castProjectile()
     {
         
-        bulletToCast.CastTrigger();
+        bulletToCast.Cast();
         findNextBulletInPool();
 
 
@@ -166,20 +182,20 @@ public class ManaBombManager : Skill
 
 
 
-    protected override void updateState()
+    public override SkillState GetState()
     {
 
-        if (isCasting) State =  SkillState.Casting;
+        if (isCasting) return SkillState.Casting;
 
         else if (coolDownTimer > 0)
-            State = SkillState.CoolDown;
+            return SkillState.CoolDown;
 
-        else if (player.CastTarget == null) State = SkillState.TargetNotFound; // if문 조건 바꿔주자
+        else if (player.CastTarget == null) return SkillState.TargetNotFound; // if문 조건 바꿔주자
 
         else if (Vector2.Distance(player.transform.position, player.CastTarget.transform.position) > Range)
-            State = SkillState.FarToCast;
+            return SkillState.FarToCast;
         else
-            State = SkillState.Castable;
+            return SkillState.Castable;
     }
 
 

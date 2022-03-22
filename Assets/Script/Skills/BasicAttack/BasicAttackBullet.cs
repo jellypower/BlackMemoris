@@ -16,10 +16,14 @@ public class BasicAttackBullet : Projectile
 
 	bool getToTarget;
 
+    private void Awake()
+    {
+		anim = GetComponent<Animator>();
+
+	}
+
 	private void Start()
 	{
-		
-		anim = GetComponent<Animator>();
 		explodeAnimId = Animator.StringToHash("explode");
 	}
 

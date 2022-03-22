@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public struct StatModifier
+public class StatModifier
 {
 
 }

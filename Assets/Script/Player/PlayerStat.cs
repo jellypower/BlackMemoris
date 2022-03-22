@@ -6,11 +6,6 @@ using UnityEngine;
 public class PlayerStat : CharacterBasicStat
 {
     public FloatStat MaxMP;
-    public IntStat Agility;
-    public IntStat Level;
-    public IntStat Exp;
-    public IntStat SkillPoint;
-    public IntStat Money;
 
     public float CurrentMP { get; protected set; }
 

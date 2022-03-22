@@ -10,8 +10,7 @@ public class BasicAttackManager : Skill
     [Space]
     [Header("BasicAttack/Skill Prefabs")]
     public GameObject ProjectilePrefab;
-    public GameObject IndicatorPrefab;
-    public GameObject UIPrefab;
+
 
 
 
@@ -20,8 +19,9 @@ public class BasicAttackManager : Skill
     [SerializeField] float ProjectileSpeed;
     [SerializeField] float dmgConst;
     [SerializeField] float dmgCoeff;
-    [SerializeField] float impactConst;
-    [SerializeField] float impactCoeff;
+    [SerializeField] float impact;
+    [SerializeField] protected float Range; // 기본 사거리
+
 
     [Header("BasicAttack/Skill Settings")]
     [SerializeField] int objPoolMaxIndex;
@@ -37,7 +37,7 @@ public class BasicAttackManager : Skill
 
 
 
-    protected Animator Anim;
+    protected Animator anim;
     protected int animCastTriggerId;
     protected int interruptTriggerId;
 
@@ -45,7 +45,7 @@ public class BasicAttackManager : Skill
     {
         get
         {
-            return dmgConst + dmgCoeff * player.Stat.SpellPower.Value;
+            return dmgConst + dmgCoeff * player.Stat.Power.Value;
         }
     }
 
@@ -53,7 +53,7 @@ public class BasicAttackManager : Skill
     {
         get
         {
-            return impactConst;
+            return impact;
         }
     }
 
@@ -64,13 +64,18 @@ public class BasicAttackManager : Skill
         awakeAnimator();
         initBulletPool();
 
-        CharacterMask = LayerMask.GetMask("Character");
 
     }
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
+        if (totalCastTime <= 0.1)
+            throw new Exception("TotalCastTime have to be more than 0.1");
+        else
+            anim.SetFloat("CastTimeMultiplier", 1/totalCastTime);
+
     }
 
     void initBulletPool()
@@ -97,8 +102,8 @@ public class BasicAttackManager : Skill
         player = GetComponentInParent<PlayerController>();
         if (player == null) throw new Exception("PlayerMotor not found");
 
-        Anim = GetComponent<Animator>();
-        if (Anim == null) throw new Exception("Animator not found");
+        anim = GetComponent<Animator>();
+        if (anim == null) throw new Exception("Animator not found");
 
     }
 
@@ -110,30 +115,31 @@ public class BasicAttackManager : Skill
 
     public override void InterruptCasting()
     {
-        Anim.ResetTrigger(animCastTriggerId);
-        Anim.SetTrigger(interruptTriggerId);
+        anim.ResetTrigger(animCastTriggerId);
+        anim.SetTrigger(interruptTriggerId);
         isCasting = false;
 
     }
 
     public void finishByAnim()
     {
+        FinishCasting();
+    }
+
+    protected override void FinishCasting()
+    {
         isCasting = false;
     }
 
 
-
-
-    // Update is called once per frame
     void Update()
     {
-        updateState();
 
         if (player.CastTarget != null)
             transform.rotation = TransformUtils.getAngleTo(transform.position, player.CastTarget.transform.position);
 
         UpdateCooldown();
-        UpdateFreezeTime();
+        UpdateCastDelayTime();
 
 
     }
@@ -149,7 +155,7 @@ public class BasicAttackManager : Skill
         bulletToCast.SetProjectileProperty(
             player.CastTarget,
             ProjectileSpeed,
-            player.Stat.SpellPower.Value * dmgCoeff + dmgConst);
+            player.Stat.Power.Value * dmgCoeff + dmgConst);
 
         bulletToCast.gameObject.SetActive(true);
 
@@ -169,28 +175,30 @@ public class BasicAttackManager : Skill
 
 
 
-    protected override void updateState()
+    public override SkillState GetState()
     {
 
         if (isCasting)
-            State = SkillState.Casting;
+            return SkillState.Casting;
         else if (coolDownTimer > 0)
-            State = SkillState.CoolDown;
+            return SkillState.CoolDown;
         else if (player.CastTarget == null)
-            State = SkillState.TargetNotFound;
+            return SkillState.TargetNotFound;
         else if (Vector2.Distance(player.transform.position, player.CastTarget.transform.position) > Range)
-            State = SkillState.FarToCast;
+            return SkillState.FarToCast;
         else 
-            State = SkillState.Castable;
+            return SkillState.Castable;
     }
+
+
 
     public override void CastSkill()
     {
 
-        Anim.ResetTrigger(interruptTriggerId);
-        Anim.SetTrigger(animCastTriggerId);
+        anim.ResetTrigger(interruptTriggerId);
+        anim.SetTrigger(animCastTriggerId);
         isCasting = true;
-        coolDownTimer = defaultCoolDown;
+        coolDownTimer = coolDownTime;
         castDelayTimer = castDelay;
     }
 

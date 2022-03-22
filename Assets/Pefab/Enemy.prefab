@@ -21,7 +21,10 @@ GameObject:
   - component: {fileID: 1437430776}
   - component: {fileID: 1437430777}
   - component: {fileID: 1437430778}
-  m_Layer: 7
+  - component: {fileID: 1299079317}
+  - component: {fileID: 1299079318}
+  - component: {fileID: 1299079319}
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -112,7 +115,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &8400483628332607489
 BoxCollider2D:
@@ -330,3 +333,71 @@ MonoBehaviour:
     value: 0
   Money:
     value: 0
+--- !u!114 &1299079317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400483628332607519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa33f917bdc93349b9d8fc0507d9fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP:
+    value: 100
+  SpellPower:
+    value: 0
+  CastSpeed:
+    value: 0
+  Speed:
+    value: 0
+  Range:
+    value: 0
+  Def:
+    value: 0
+  ImpactResistance:
+    value: 0
+  initWithScriptableObj: 0
+  initializer: {fileID: 0}
+  MaxMP:
+    value: 0
+  Agility:
+    value: 0
+  Level:
+    value: 0
+  Exp:
+    value: 0
+  SkillPoint:
+    value: 0
+  Money:
+    value: 0
+--- !u!114 &1299079318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400483628332607519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5aada5f62a68cf4d9fff11ee0f42ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Skills: []
+--- !u!114 &1299079319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400483628332607519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec09b163454603943bf08f7f0f3e8186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterStat: {fileID: 0}
+  CastTargetPos: {x: 0, y: 0}
+  Stat: {fileID: 0}

@@ -44,6 +44,11 @@ public class PlayerSkillContainer : MonoBehaviour
             if (obj == null) throw new Exception("ManaBomb GameObject not found");
             Skills[3] = obj.GetComponent<Skill>();
             if (Skills[3] == null) throw new Exception("ManaBomb's Skill component not found");
+            
+            obj = transform.Find("WaveDash").gameObject;
+            if (obj == null) throw new Exception("WaveDash GameObject not found");
+            Skills[2] = obj.GetComponent<Skill>();
+            if (Skills[3] == null) throw new Exception("WaveDash's Skill component not found");
         }
 
     }

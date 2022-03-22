@@ -9,6 +9,9 @@ public abstract class Character : MonoBehaviour
     [HideInInspector]
     public CharacterBasicStat CharacterStat;
 
+    [HideInInspector]
+    public HitBoxHandler hitbox;
+
     #region start functions
 
     #endregion
@@ -26,7 +29,7 @@ public abstract class Character : MonoBehaviour
 
     public abstract void GetImpact(float impact, float time,Vector2 dir, Character Attacker);
 
-    public abstract void RecoverFromImpact();
+    protected abstract void RecoverFromImpact();
 
     #endregion
 

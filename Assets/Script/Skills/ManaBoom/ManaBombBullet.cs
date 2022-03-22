@@ -5,6 +5,8 @@ using UnityEngine;
 public class ManaBombBullet : Projectile
 {
 
+
+
 	[SerializeField] int defaultImpact;
 	[SerializeField] float impactMagnitute;
 	[SerializeField] float explosionRange;
@@ -26,6 +28,7 @@ public class ManaBombBullet : Projectile
 		anim = GetComponent<Animator>();
 		explodeAnimId = Animator.StringToHash("Explode");
 		castAnimId = Animator.StringToHash("Cast");
+
 	}
 
 
@@ -35,7 +38,6 @@ public class ManaBombBullet : Projectile
 
 		if (spawner != null)
 		{
-			transform.position = spawner.transform.position;
 
 			if (target != null)
 			{
@@ -92,9 +94,9 @@ public class ManaBombBullet : Projectile
 
 		foreach(var coll in colls)
         {
-			Character c = coll.gameObject.GetComponent<Character>();
-			AttackTarget(damage, c);
-			ImpactTarget(defaultImpact, c);
+			var hitbox = coll.gameObject.GetComponent<HitBoxHandler>();
+			AttackTarget(damage, hitbox);
+			ImpactTarget(defaultImpact, hitbox);
         }
 		
     }
@@ -107,12 +109,13 @@ public class ManaBombBullet : Projectile
 
 	}
 
-	public void CastBullet(Character target, float speed, float damage)
+	public void Spawn(Character target, float speed, float damage)
 	{
 		this.target = target;
 		this.speed = speed;
 		this.damage = damage;
 		transform.parent = null;
+		transform.position = ((ManaBombManager)spawner).SpawnPoint.position;
 		gameObject.SetActive(true);
 	}
 
@@ -131,14 +134,14 @@ public class ManaBombBullet : Projectile
 
 	}
 
-	void AttackTarget(float dmg, Character target)
+	void AttackTarget(float dmg, HitBoxHandler target)
 	{
 
 		target.GetAttack(dmg, spawner.Player);
 		// target에서 hitbox를 치면 hitbox에는 character 클래스가 없어서 오류가 뜬다.
 	}
 
-	void ImpactTarget(int impact, Character target)
+	void ImpactTarget(int impact, HitBoxHandler target)
 	{
 
 		Vector2 force =
@@ -146,13 +149,13 @@ public class ManaBombBullet : Projectile
 			.normalized
 			* GameConst.ForceAdjuster
 			* impactMagnitute;
+		
 
-
-		target.GetImpact(impact, 1.0f, force, target);
+		target.GetImpact(impact, 1.0f, force, spawner.Player);
 	}
 
 
-	public void CastTrigger()
+	public void Cast()
     {
 		IsCasted = true;
 		anim.SetTrigger(castAnimId);
