@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using Unity.Burst;
 
 
 /***
@@ -16,6 +17,7 @@ using System.Collections;
 
 public class PlayerController : Character
 {
+    
     OrderState order;
 
     public Character CastTarget { get; private set; }
@@ -200,14 +202,14 @@ public class PlayerController : Character
     {
 
 
-
         if (OrderExecutable) 
         {
             updateWithOrder(); 
+
+
         }
         else
         {
-            print("notExecutable");
             // 때론 미리 입력된 order를 저장해둘 필요가 있다. 이즈가 E Q 선입력 가능한 것처럼
             setOrder(OrderState.None);
         }
@@ -264,7 +266,7 @@ public class PlayerController : Character
             case OrderState.CastToTarget: 
                 if (skillToCast != null && skillToCast.GetState() == SkillState.CoolDown)
                 {
-                    skillToCast = null;
+                    //skillToCast = null;
                     break;
                 }
                 if (skillToCast.GetState() == SkillState.FarToCast)
@@ -280,7 +282,7 @@ public class PlayerController : Character
             case OrderState.CastToGround:
                 if (skillToCast != null && skillToCast.GetState() == SkillState.CoolDown)
                 {
-                    skillToCast = null;
+                    //skillToCast = null;
                     break;
                 }
                 if (skillToCast.GetState() == SkillState.FarToCast)
@@ -308,6 +310,7 @@ public class PlayerController : Character
     {
         get
         {
+            
 
             if (state == PlayerActionState.CrowdControl) return false;
             else if (state == PlayerActionState.SkillCasting && skillToCast.OnCastDelay())
@@ -498,7 +501,7 @@ public class PlayerController : Character
         CastTarget = null;
         CastTargetPos = transform.position;
         path.Clear();
-        skillToCast = null;
+        //skillToCast = null;
         state = nextState;
 
 
@@ -734,6 +737,23 @@ public class PlayerController : Character
     {
         impactedTime = 0;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.transform.tag == "Wall")
+        {
+            print(transform.name+"Stop!");
+            rb2d.velocity = Vector2.zero;
+        }
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        print("exit");
+    }
+
 
 
 

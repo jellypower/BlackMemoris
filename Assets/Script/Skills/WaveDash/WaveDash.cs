@@ -79,6 +79,8 @@ public class WaveDash : Skill
     public override void CastSkill()
     {
 
+        castDelayTimer = castDelay;
+
         transform.rotation = TransformUtils.getAngleTo(Vector2.zero, dashVector);
 
         totalCastTimer = totalCastTime;
