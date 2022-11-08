@@ -294,6 +294,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1024,6 +1025,37 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      character_run 1_3: -7482700265027152430
+      character_run 1_12: 5083681326956981865
+      character_run 1_17: -8327879683799516344
+      character_run 1_16: 350076816368732452
+      character_run 1_14: -6479097182489924150
+      character_run 1_25: 3718966860622958398
+      character_run 1_4: 7595816906172114562
+      character_run 1_11: 6490493859471093987
+      character_run 1_1: 8718544196285598120
+      character_run 1_15: 4715959058518056422
+      character_run 1_21: -6994414041575401678
+      character_run 1_26: 2740809266381304315
+      character_run 1_0: 998516268780817001
+      character_run 1_9: -7481738221888368398
+      character_run 1_5: -1711147126603979500
+      character_run 1_27: -3512867462791030639
+      character_run 1_23: -6624178178845219468
+      character_run 1_10: -3674167996148866534
+      character_run 1_19: -3774965430618301395
+      character_run 1_7: -6629606887374450367
+      character_run 1_20: 6812337942935314104
+      character_run 1_8: -4491424318959506498
+      character_run 1_22: 5218632856639398009
+      character_run 1_18: -7705087094616101221
+      character_run 1_29: -5699959852023453902
+      character_run 1_13: -6398500571995336995
+      character_run 1_24: -8258531082214196207
+      character_run 1_28: -8524459232804339814
+      character_run 1_2: 8666971794508232236
+      character_run 1_6: 2966790626706157330
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

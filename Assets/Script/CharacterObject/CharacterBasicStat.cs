@@ -11,21 +11,17 @@ public class CharacterBasicStat : MonoBehaviour
     public FloatStat Speed;
     public IntStat ImpactResistance;
 
+    PlayerController player;
 
-    [SerializeField] bool initWithScriptableObj;
-    [SerializeField] StatInitializer initializer;
-
+    
     public float CurrentHP { get; protected set; }
 
 
     protected virtual void Awake()
     {
         CurrentHP = MaxHP.Value;
+        player = GetComponent<PlayerController>();
 
-        if (initWithScriptableObj)
-        {
-            initStat();
-        }
     }
 
 
@@ -44,13 +40,9 @@ public class CharacterBasicStat : MonoBehaviour
 
     public virtual void Die()
     {
-        
+        player.Die();
     }
 
-    public void initStat()
-    {
-
-    }
 
 
 }

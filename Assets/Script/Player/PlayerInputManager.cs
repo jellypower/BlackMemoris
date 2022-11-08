@@ -16,7 +16,7 @@ public class PlayerInputManager : MonoBehaviour
 
 
     CursorState cursorState;
-    PlayerController player;
+    [SerializeField] PlayerController player;
 
     PlayerSkillContainer skillContainer;
 
@@ -48,10 +48,7 @@ public class PlayerInputManager : MonoBehaviour
 
     void getDependentComponents()
     {
-        player = GetComponent<PlayerController>();
-        if (player == null) throw new Exception("No player found, Input Manager have to be attached to Player");
-
-        skillContainer = GetComponent<PlayerSkillContainer>();
+        skillContainer = player.gameObject.GetComponent<PlayerSkillContainer>();
     }
 
     void initInputManager()
@@ -86,10 +83,11 @@ public class PlayerInputManager : MonoBehaviour
                 {
                     if (readySkill.GetState() != SkillState.CoolDown)
                     {
-                        Debug.Log(readySkill);
+
                         player.OrderToCastToTarget(readySkill, objUnderCursor);
 
                     }
+
                 }
                 else if(readySkill.CastType == SkillCastType.NonTargeting)
                 {
@@ -130,6 +128,12 @@ public class PlayerInputManager : MonoBehaviour
 
                     if(readySkill == null)
                     {
+                        break;
+                    }
+
+                    if(readySkill.GetState() == SkillState.CoolDown)
+                    {
+                        GameManager.instance.BattleAlert("Cool Down", 3, 0.01f);
                         break;
                     }
 

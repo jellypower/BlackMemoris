@@ -375,6 +375,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1294,6 +1295,46 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      character_hit1_13: -8707958444893781851
+      character_hit1_21: 8271134684166234674
+      character_hit1_37: -8077110671349447439
+      character_hit1_0: -6262115520402405227
+      character_hit1_18: -3271362361684184707
+      character_hit1_34: 540535090851167326
+      character_hit1_36: 695000605661141171
+      character_hit1_28: -1043758710784538541
+      character_hit1_29: -3162191026523680737
+      character_hit1_8: -3650280232674057329
+      character_hit1_12: 8028400903758388690
+      character_hit1_19: 1212160378185784585
+      character_hit1_26: -7418006941182389229
+      character_hit1_9: -6954223822891285614
+      character_hit1_35: -3417695220878644980
+      character_hit1_5: -9203369324568821961
+      character_hit1_6: -1580459760877045633
+      character_hit1_33: 6422685698915639984
+      character_hit1_20: -6487686464556792470
+      character_hit1_3: -6090254703913998813
+      character_hit1_2: -774865548626053398
+      character_hit1_25: 308422050106609100
+      character_hit1_17: 6139648829017560831
+      character_hit1_23: 1375459764898411120
+      character_hit1_15: -3823413717357127325
+      character_hit1_7: 1376535845959461601
+      character_hit1_1: -874535501970130073
+      character_hit1_16: 1791166189109995216
+      character_hit1_30: -1972901397837643717
+      character_hit1_31: 8622008913729581049
+      character_hit1_27: -9190095865213423804
+      character_hit1_22: -6173126383304768256
+      character_hit1_38: -6971310739555947570
+      character_hit1_24: 4957330007908439795
+      character_hit1_32: -574496478786327751
+      character_hit1_4: 8706988773997413568
+      character_hit1_11: 3519399792121726374
+      character_hit1_10: -8142916875016538106
+      character_hit1_14: -1082085056675731149
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

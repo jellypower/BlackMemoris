@@ -22,10 +22,12 @@ public class WaveDash : Skill
 
     Animator anim;
 
-    Vector2 dashVector;
-
     LinkedList<HitBoxHandler> objsInrange;
     LinkedList<HitBoxHandler> objsAlreadyAttacked;
+
+    Rigidbody2D playerRb2d;
+
+    Vector2 dashVector;
 
     protected override void Awake()
     {
@@ -65,6 +67,7 @@ public class WaveDash : Skill
 
     IEnumerator Dash()
     {
+
         while (totalCastTimer > 0)
         {
             player.DashTowards(dashVector, dashSpeed);
@@ -80,14 +83,14 @@ public class WaveDash : Skill
     {
 
         castDelayTimer = castDelay;
-
-        transform.rotation = TransformUtils.getAngleTo(Vector2.zero, dashVector);
-
+        
         totalCastTimer = totalCastTime;
         coolDownTimer = coolDownTime;
 
         dashVector = player.CastTargetPos - (Vector2)player.transform.position;
         dashVector = dashVector.normalized;
+
+        transform.rotation = TransformUtils.getAngleTo(Vector2.zero, dashVector);
 
         anim.ResetTrigger(animInterruptTriggerId);
         anim.SetTrigger(animCastTriggerId);
@@ -176,7 +179,7 @@ public class WaveDash : Skill
     {
         target.GetAttack(dmgConst, player);
 
-        Vector2 pushVector = (target.transform.position - player.transform.position).normalized;
+        Vector2 pushVector = dashVector;
 
         target.GetImpact(impactConst, impactTime, pushVector * GameConst.ForceAdjuster * impactMagnitute, player);
     }

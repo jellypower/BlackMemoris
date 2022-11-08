@@ -44,24 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af7c5a2e167448459ac501691fa84f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCoolDown: 10
-  skillType: 0
-  castType: 0
-  totalCastTime: 1.5
-  castDelay: 1.4
-  rangeCoeff: 1
-  basicRangeConst: 1
-  playerCastAnimator: {fileID: 0}
-  ProjectilePrefab: {fileID: 4353065975268865167, guid: b9e6a255b450f0f46875fd127640de71, type: 3}
   IndicatorPrefab: {fileID: 0}
-  UIPrefab: {fileID: 0}
+  SkillIcon: {fileID: 0}
+  castType: 0
+  playerCastAnimator: {fileID: 0}
+  coolDownTime: 0
+  totalCastTime: 1.5
+  castDelay: 1.5
+  ProjectilePrefab: {fileID: 4353065975268865167, guid: b9e6a255b450f0f46875fd127640de71, type: 3}
   ProjectileSpeed: 3
   dmgConst: 10
   dmgCoeff: 1
   impactConst: 10
   impactCoeff: 1
-  bulletSpawnTime: 0.4
+  bulletSpawnTime: 0.5
   bulletChargeTime: 1
+  Range: 3
   objPoolMaxIndex: 3
   drawGizmo: 1
 --- !u!1 &8631498913521327152

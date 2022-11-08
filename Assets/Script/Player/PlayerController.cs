@@ -17,7 +17,7 @@ using Unity.Burst;
 
 public class PlayerController : Character
 {
-    
+
     OrderState order;
 
     public Character CastTarget { get; private set; }
@@ -30,7 +30,7 @@ public class PlayerController : Character
 
     [HideInInspector]
     public PlayerStat Stat;
-    
+
 
 
 
@@ -66,7 +66,7 @@ public class PlayerController : Character
     bool skillInterruptTrigger = false;
     bool impactEnterTrigger = false;
     bool impactExitTrigger = false; //impact 상태에서 벗어남
-    
+
 
 
 
@@ -81,6 +81,8 @@ public class PlayerController : Character
     Rigidbody2D rb2d;
     float impactedTime;
     Vector2 impactedForce = Vector2.zero;
+
+    bool isDead = false;
 
 
     // Awake 는 script의 내부 변수 init
@@ -111,15 +113,25 @@ public class PlayerController : Character
     void Update()
     {
 
+
         UpdateState();
 
+        if (isDead)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Ghost");
+            ResetTrigger();
+            return;
+        }
 
         Action();
+
+
+
         Animate();
-        
 
 
-        UpdateTrigger();
+
+        ResetTrigger();
 
 
     }
@@ -192,7 +204,7 @@ public class PlayerController : Character
         impactTimeId = Animator.StringToHash("ImpactTime");
         castTimeExtenderId = Animator.StringToHash("CastTimeExtender");
         impactRecoverTriggerId = Animator.StringToHash("ImpactRecover");
-        
+
     }
 
     #endregion
@@ -202,9 +214,9 @@ public class PlayerController : Character
     {
 
 
-        if (OrderExecutable) 
+        if (OrderExecutable)
         {
-            updateWithOrder(); 
+            updateWithOrder();
 
 
         }
@@ -228,7 +240,7 @@ public class PlayerController : Character
     void updateWithOrder()
     {
         BlockDupOrder(); // 이미 실행하고 있는 행동과 동일한 명령이 들어오면 무시함
-       
+
 
         switch (state)
         {
@@ -248,7 +260,7 @@ public class PlayerController : Character
                     TransitionByOrder();
 
                 }
-                break;                
+                break;
         }
 
         setOrder(OrderState.None);
@@ -263,7 +275,7 @@ public class PlayerController : Character
             case OrderState.MoveToTargetPos:
                 state = PlayerActionState.Moving;
                 break;
-            case OrderState.CastToTarget: 
+            case OrderState.CastToTarget:
                 if (skillToCast != null && skillToCast.GetState() == SkillState.CoolDown)
                 {
                     //skillToCast = null;
@@ -289,7 +301,7 @@ public class PlayerController : Character
                 {
                     state = PlayerActionState.MovingToTarPosToCast;
                 }
-                else if (skillToCast.GetState()== SkillState.Castable)
+                else if (skillToCast.GetState() == SkillState.Castable)
                 {
                     print("A");
                     skillCastingEnterTrigger = true;
@@ -310,7 +322,7 @@ public class PlayerController : Character
     {
         get
         {
-            
+
 
             if (state == PlayerActionState.CrowdControl) return false;
             else if (state == PlayerActionState.SkillCasting && skillToCast.OnCastDelay())
@@ -374,7 +386,7 @@ public class PlayerController : Character
             case PlayerActionState.SkillCasting:
                 if (skillToCast.CastType == SkillCastType.Targeting)
                     FaceDirection = (Vector2)(CastTarget.transform.position - transform.position);
-                else if (skillToCast.CastType == SkillCastType.NonTargeting)
+                else if (skillToCast.CastType == SkillCastType.NonTargeting && skillCastingEnterTrigger)
                     FaceDirection = CastTargetPos - (Vector2)transform.position;
                 break;
 
@@ -386,9 +398,9 @@ public class PlayerController : Character
     {
         switch (state)
         {
-            
+
             case PlayerActionState.SkillCasting: // 어케 해결해야되냐
-                if (skillToCast.GetState()!= SkillState.Casting && !skillCastingEnterTrigger)
+                if (skillToCast.GetState() != SkillState.Casting && !skillCastingEnterTrigger)
                 {
                     clearAction(PlayerActionState.idle);
                 }
@@ -429,7 +441,7 @@ public class PlayerController : Character
     void updateFromInteraction()
     {
         if (impactEnterTrigger)
-        { 
+        {
             rb2d.AddForce(impactedForce);
             clearAction(PlayerActionState.CrowdControl);
         }
@@ -498,7 +510,7 @@ public class PlayerController : Character
     void clearAction(PlayerActionState nextState)
     {
 
-        CastTarget = null;
+        //CastTarget = null;
         CastTargetPos = transform.position;
         path.Clear();
         //skillToCast = null;
@@ -525,7 +537,7 @@ public class PlayerController : Character
         }
     }
 
-    
+
 
 
     #endregion
@@ -559,17 +571,17 @@ public class PlayerController : Character
         }
         if (skillInterruptTrigger)
         {
-           
+
             anim.ResetTrigger(skillCastTriggerId);
             anim.SetTrigger(skillInterruptTriggerId);
         }
-        if (impactEnterTrigger) 
+        if (impactEnterTrigger)
         {
             anim.ResetTrigger(skillCastTriggerId);
             anim.ResetTrigger(skillInterruptTriggerId);
             anim.SetTrigger(impactTriggerId);
         }
-        if(impactExitTrigger)
+        if (impactExitTrigger)
         {
             anim.SetTrigger(impactRecoverTriggerId);
         }
@@ -587,7 +599,7 @@ public class PlayerController : Character
         if (Mathf.Approximately(castTime, 1.0f))
         {
             castTimeMagnif = 1.0f;
-            anim.SetFloat(skillCastingTimeId , castTimeMagnif);
+            anim.SetFloat(skillCastingTimeId, castTimeMagnif);
             anim.SetFloat(castTimeExtenderId, FRAME_NO);
         }
         else if (castTime < 1.017f) // 0.017f 는 한 프레임에 걸리는 시간
@@ -608,7 +620,7 @@ public class PlayerController : Character
     #endregion
 
     #region trigger function
-    void UpdateTrigger()
+    void ResetTrigger()
     {
         skillCastingEnterTrigger = false;
         skillInterruptTrigger = false;
@@ -616,7 +628,7 @@ public class PlayerController : Character
         impactExitTrigger = false;
     }
     #endregion
-    
+
 
 
     #region private functions to set player
@@ -671,7 +683,7 @@ public class PlayerController : Character
 
     public void OrderToMove(Vector2 pos)
     {
-        
+
 
         setTarPos(pos);
         setOrder(OrderState.MoveToTargetPos);
@@ -706,12 +718,12 @@ public class PlayerController : Character
     public override void GetAttack(float damage, Character Attacker)
     {
         CharacterStat.TakeDamage(damage);
-        Debug.Log("HP: " + CharacterStat.CurrentHP+ ", damage: " + damage );
+        Debug.Log("HP: " + CharacterStat.CurrentHP + ", damage: " + damage);
     }
 
-    public override void GetImpact(float impact, float impactedTime, Vector2 force ,Character Attacker)
+    public override void GetImpact(float impact, float impactedTime, Vector2 force, Character Attacker)
     {
-        if(impact > Stat.ImpactResistance.Value)
+        if (impact > Stat.ImpactResistance.Value)
         {
 
             interruptCasting();
@@ -723,13 +735,24 @@ public class PlayerController : Character
 
     }
 
-    public void DashTowards(Vector2 Direction,float speed)
-        // rigidbody2d 에 의해서가 아닌 방법으로 외부 class가 character를 이동시켜 주는 함수.
-        // rb2d는 물리적인 강체로써 이동하기 때문에 정직하게 원하는 거리만큼, 원하는 시간동안만 character를 움직이는게 불가하다.
+    public void DashTowards(Vector2 Direction, float speed)
+    // rigidbody2d 에 의해서가 아닌 방법으로 외부 class가 character를 이동시켜 주는 함수.
+    // rb2d는 물리적인 강체로써 이동하기 때문에 정직하게 원하는 거리만큼, 원하는 시간동안만 character를 움직이는게 불가하다.
     {
+        //if (Physics2D.OverlapPoint((Vector2)transform.position + (Direction * speed * Time.deltaTime)) != null) return;
+        
+
         transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + Direction, speed * Time.deltaTime);
     }
 
+    public void Die()
+    {
+        anim.SetTrigger("Die");
+        anim.ResetTrigger(impactTriggerId);
+        isDead = true;
+        
+
+    }
 
     #endregion
 
@@ -738,21 +761,6 @@ public class PlayerController : Character
         impactedTime = 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-        if (collision.transform.tag == "Wall")
-        {
-            print(transform.name+"Stop!");
-            rb2d.velocity = Vector2.zero;
-        }
-
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        print("exit");
-    }
 
 
 

@@ -23,6 +23,7 @@ public enum PlayerActionState
     MovingToTarPosToCast, // TarPos 위치에 스킬을 cast하기 위해 움직이는 상태.
                           // TarPos에 도달하면 스킬이 Castable 상태가 되고 Castable 상태가 되면 SkillCasting 상태로 바뀜
     CrowdControl,
+    Die
 };
 
 public enum PlayerAnimState

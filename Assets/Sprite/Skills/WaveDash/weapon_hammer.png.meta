@@ -861,6 +861,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -2473,6 +2474,79 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      weapon_hammer_8: 3063565308549575210
+      weapon_hammer_3: -3588613285134949976
+      weapon_hammer_9: -6862931436825541635
+      weapon_hammer_58: -5670208295776403069
+      weapon_hammer_42: -5411163412212000524
+      weapon_hammer_13: -2695474125823579872
+      weapon_hammer_20: 4826499067858979759
+      weapon_hammer_36: 8493964156267990161
+      weapon_hammer_30: -3189126669815403571
+      weapon_hammer_45: -7292388739309118726
+      weapon_hammer_35: -4940526852233529778
+      weapon_hammer_62: -7820221552163216951
+      weapon_hammer_63: 3104100197673600708
+      weapon_hammer_6: -5143209274165312229
+      weapon_hammer_53: 3225336711591784820
+      weapon_hammer_16: 1520063759644544689
+      weapon_hammer_4: 597468363102507819
+      weapon_hammer_38: -1906489362555768854
+      weapon_hammer_54: -6326053119077486760
+      weapon_hammer_65: 292749257622414945
+      weapon_hammer_60: -6505305978864487335
+      weapon_hammer_24: -572354060733625257
+      weapon_hammer_46: -862462773831782865
+      weapon_hammer_7: 6367002377160573144
+      weapon_hammer_71: -653215459895032056
+      weapon_hammer_50: -4446404496684255136
+      weapon_hammer_69: 1654482167370504727
+      weapon_hammer_18: -4152133565128676029
+      weapon_hammer_21: 1009708308796155518
+      weapon_hammer_39: -1730940057002741969
+      weapon_hammer_19: 2590920938155832368
+      weapon_hammer_66: -5007201108443827430
+      weapon_hammer_27: -720883541729242306
+      weapon_hammer_55: -5734993421615502074
+      weapon_hammer_22: -4187050359370145179
+      weapon_hammer_59: 8466554899408288189
+      weapon_hammer_29: 2522009544312800175
+      weapon_hammer_51: 1031206975407171575
+      weapon_hammer_41: 725280271316900183
+      weapon_hammer_28: 2544796020614981202
+      weapon_hammer_67: 3709990505877212909
+      weapon_hammer_34: -8307493209818099637
+      weapon_hammer_15: 5527715416823023677
+      weapon_hammer_1: -1360269946747811037
+      weapon_hammer_14: 6092373988681369225
+      weapon_hammer_23: 6329112456023990597
+      weapon_hammer_12: 4502635055043459689
+      weapon_hammer_48: -4848346336257694608
+      weapon_hammer_52: 3857257655842494083
+      weapon_hammer_5: 6288299226992479080
+      weapon_hammer_70: -2694877064131640584
+      weapon_hammer_26: -5315116166844235919
+      weapon_hammer_37: 3164571351971045407
+      weapon_hammer_68: 2477193551793984310
+      weapon_hammer_11: 3970660834173306367
+      weapon_hammer_40: -2449297629292269755
+      weapon_hammer_25: -2673460213532920084
+      weapon_hammer_57: -8596460736139126785
+      weapon_hammer_47: -8095485128860794306
+      weapon_hammer_2: 2311411824268719370
+      weapon_hammer_61: 1453619374143712705
+      weapon_hammer_32: 336153783559719589
+      weapon_hammer_44: 3573291921985766898
+      weapon_hammer_0: 2300485220481108644
+      weapon_hammer_31: 3145561814857764260
+      weapon_hammer_43: -115129596323344968
+      weapon_hammer_33: 9059365393149692958
+      weapon_hammer_49: 1475554584447044115
+      weapon_hammer_10: -7471595137253332105
+      weapon_hammer_64: -5112801738525485426
+      weapon_hammer_56: -6381621383837299324
+      weapon_hammer_17: 5689011225054895896
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

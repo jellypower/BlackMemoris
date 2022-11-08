@@ -579,21 +579,21 @@ public class PathFinder : MonoBehaviour
 
     #region Draw On Gizmo Functions for DEBUG
 #if DEBUG
-    bool drawOnGizmo;
+    [SerializeField]bool gizmoDraw;
 
     Color goalGizmoColor = new Color(1, 1, 0, 0.5f);
     void OnDrawGizmos()
     {
-        if (drawOnGizmo)
+        if (gizmoDraw)
         {
             drawObjectPositionNode();
             drawNodeOnGizmo(goalNode, goalGizmoColor);
             //drawGridLine();
             //drawObstacles();
-            drawShortestPath();
+            //drawShortestPath();
             //drawFinalWaypoints();
             //drawFinalNodes();
-            //drawClosedNodes();
+            drawClosedNodes();
 
         }
 
@@ -675,6 +675,7 @@ public class PathFinder : MonoBehaviour
         Gizmos.color = gizmoColor;
         Gizmos.DrawCube(node.nodeCenter, new Vector2(cellSize, cellSize));
     }
+
 
 #endif
     #endregion

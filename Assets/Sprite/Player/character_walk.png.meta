@@ -402,6 +402,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1384,6 +1385,49 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      character_walk_0: -6574208214846069618
+      character_walk_8: -6497509066972985238
+      character_walk_16: 118154516529152052
+      character_walk_30: 9112780336423854577
+      character_walk_21: -5373003028076513077
+      character_walk_29: -1531234892866338606
+      character_walk_37: 7139861845141714894
+      character_walk_40: 5976424089054054311
+      character_walk_11: 4385791265398614833
+      character_walk_2: -170682749518285427
+      character_walk_23: 1510372037361428978
+      character_walk_12: -8561152792613723950
+      character_walk_1: -5293580052745781348
+      character_walk_7: -4378567973107492004
+      character_walk_20: 2722966636542033532
+      character_walk_28: -2687609155294137996
+      character_walk_10: -3480797893657022496
+      character_walk_18: 3211488900767476384
+      character_walk_4: 3866428315974867331
+      character_walk_17: 4621222976856293505
+      character_walk_24: -2684646468235537058
+      character_walk_31: 3970573829335206866
+      character_walk_34: -1215858892409508655
+      character_walk_33: -3826270033288106280
+      character_walk_5: -6150558393655662540
+      character_walk_36: 1541567628432247378
+      character_walk_25: 1476623486943196793
+      character_walk_39: 5857434618274733107
+      character_walk_32: -2102795941739582346
+      character_walk_41: -4061501217733592682
+      character_walk_26: -7617213395844151706
+      character_walk_19: 3164041702555775233
+      character_walk_9: 6492466153233571595
+      character_walk_27: -3738825147572389400
+      character_walk_13: -4824713044670912261
+      character_walk_22: -2282655746624257695
+      character_walk_3: -2527037611491183005
+      character_walk_35: -2514108368346968131
+      character_walk_15: 3482943864514796164
+      character_walk_6: 288548216171056748
+      character_walk_14: -2418798127417904688
+      character_walk_38: -5567268492872049435
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

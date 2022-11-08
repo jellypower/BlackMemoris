@@ -20,14 +20,14 @@ public abstract class Skill : MonoBehaviour
     public GameObject IndicatorPrefab;
     public Sprite SkillIcon;
 
-  
-    [SerializeField] protected SkillCastType castType; 
-    public SkillCastType CastType{ get { return castType; }}
+
+    [SerializeField] protected SkillCastType castType;
+    public SkillCastType CastType { get { return castType; } }
     // 타게팅, 논타게팅, 토글, 패시브 등 어떤 유형의 스킬인지 알려줌.
     // castType을 통해 실제 스킬을 어떻게 사용해야 하는지에 대한 hint가 주어짐.
 
     [SerializeField] protected AnimatorOverrideController playerCastAnimator;
-    [HideInInspector] public AnimatorOverrideController PlayerCastAnimator {get { return playerCastAnimator; }}
+    [HideInInspector] public AnimatorOverrideController PlayerCastAnimator { get { return playerCastAnimator; } }
 
 
 
@@ -36,7 +36,9 @@ public abstract class Skill : MonoBehaviour
 
     [Header("Skill Stat")] // 실제 스킬 cast 시에 사용되는 정보
     [SerializeField] protected float coolDownTime;
-    protected float coolDownTimer;
+    public float CooldownTime { get { return coolDownTime; } }
+    public float coolDownTimer { get; protected set; }
+
 
     [SerializeField] protected float totalCastTime; // 플레이어가 해당 스킬을 캐스트 하는데 걸리는 시간 -> 플레이어의 캐스팅 애니메이션이 얼마나 걸릴지 결정함
     public virtual float TotalCastTime { get { return totalCastTime; } }

@@ -93,7 +93,6 @@ public class ManaBombManager : Skill
     // Update is called once per frame
     void Update()
     {
-        
 
         UpdateCooldown();
         UpdateCastDelayTime();
